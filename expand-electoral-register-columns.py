@@ -1,8 +1,9 @@
 # Description: This script expands the electoral register columns in an unencrypted xlsx spreadsheet.
-import openpyxl
 import argparse
-import os
 import datetime
+import os
+
+import openpyxl
 
 # Create an argument parser
 parser = argparse.ArgumentParser(description='Process an unencrypted xlsx spreadsheet.')
@@ -14,7 +15,7 @@ args = parser.parse_args()
 
 # Load the decrypted xlsx spreadsheet
 with open(args.xlsx_path, 'rb') as f:
-    workbook =  openpyxl.load_workbook(args.xlsx_path)
+    workbook = openpyxl.load_workbook(args.xlsx_path)
 
 # Create a new workbook to store the results
 new_workbook = openpyxl.Workbook()
@@ -36,7 +37,7 @@ for row in sheet.iter_rows():
         _lastrow = len(header) - 1
         new_sheet.append([cell.value for cell in row])  # Copy the header row to the new sheet
         continue
-    
+
     row_ = [str(i.value).replace('\xa0', ' ')
             if i.value is not None else '' for i in row]
     changed = False
@@ -49,17 +50,17 @@ for row in sheet.iter_rows():
     postcode = row_[_postcode]
     if postcode == '':
         continue
-    
+
     if postcode in row_[_postcode+1:]:
 
         while row_[_lastrow] != postcode:
-            row_.insert(_postcode+1,'')
+            row_.insert(_postcode+1, '')
 
         row_ = row_[:_lastrow+1]
         changed = True
-
     # Copy the row to the new sheet
     new_sheet.append(row_)
+
 # Save the results to a new xlsx file
 # Get the original filename
 original_filename = os.path.basename(args.xlsx_path)
