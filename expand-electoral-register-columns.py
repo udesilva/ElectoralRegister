@@ -5,9 +5,9 @@ import os
 import datetime
 
 # Create an argument parser
-parser = argparse.ArgumentParser(description='Process an encrypted xlsx spreadsheet.')
+parser = argparse.ArgumentParser(description='Process an unencrypted xlsx spreadsheet.')
 parser.add_argument('xlsx_path', type=str,
-                    help='Path to the encrypted xlsx spreadsheet')
+                    help='Path to the unencrypted xlsx spreadsheet')
 
 # Parse the command line arguments
 args = parser.parse_args()
@@ -65,7 +65,7 @@ for row in sheet.iter_rows():
 original_filename = os.path.basename(args.xlsx_path)
 
 # Add _xp to the basename
-new_filename = os.path.splitext(original_filename)[0] + '_xp.xlsx'
+new_filename = os.path.splitext(original_filename)[0] + '_filtered.xlsx'
 
 # Save the results to the new xlsx file
 new_workbook.save(new_filename)
