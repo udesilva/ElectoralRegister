@@ -3,7 +3,6 @@ import datetime
 import os
 import logging
 import openpyxl
-import textwrap
 
 # Expands the electoral register columns in an unencrypted xlsx spreadsheet.
 
